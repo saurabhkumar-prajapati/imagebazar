@@ -1,6 +1,7 @@
 
 
 # Create your views here.
+from django.db.models import Q
 from django.shortcuts import render,redirect
 from django.views.generic import (TemplateView,ListView,
                                   DetailView,CreateView,
@@ -48,11 +49,31 @@ class ShowHome(TemplateView,):
 
         return context
 
+def story_detail(request,id): #testing for search bar
+    story=get_object_or_404(Image,id=id)
+    return render(request,'search.html',{'story':story})
 
-def search(request):
-    if request.method == "GET":
-        search= request.GET.get('search')
-        titlesearch=Image.objects.all().filter(title=search)
-        return render(request,'search.html',{"titlesearch":titlesearch})
+
+
+def searchbar(request):
+
+    results=[]
+    if request.method=="GET":
+        query=request.GET.get('search')
+        results=Image.objects.filter(title=query)
+    return  render(request,'search.html',{'query': query,
+                                          'results': results})
+
+
+
+
+class Search(ListView):
+    template_name = "search.html"
+    context_object_name = "posts"
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        return Image.objects.filter(title=query) #.order_by('-created_at')
+
+
 
 

@@ -26,8 +26,10 @@ urlpatterns = [
     path('about/', views.ShowAboutPage.as_view(),name="about"),#url(r'^$', views.ShowAboutPage.as_view(),name="about")
     path('',views.ShowHomePage.as_view(),name="home"),
     #path('',views.myhome),
-    path("searchbar/", views.search,name="searchbar"),
+    path("search/", views.Search.as_view(),name="search"),
+    path("searchbar/", views.searchbar,name="searchbar"),
     path('ShowHome/', views.ShowHome.as_view(),name="ShowHome"),
     path('category/<int:cid>' ,views.ShowCategoryPage.as_view()),
+    path('<int:id>/', views.story_detail, name='story_detail'),
 
     ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -17,15 +17,19 @@
             Categories
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">All</a></li>
-            <li><a class="dropdown-item" href="#">Cricket</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Bollywood</a></li>
+            {% for i in categories %}
+          <li><a href="/category/{{ i.pk}}" class="list-group-item list-group-item-action  dropdown-item"
+                 tabindex="-1" >{{ i.title }}</a></li>
+         {% endfor %}
+
+
+
           </ul>
         </li>
 
       </ul>
-      <form class="d-flex" method ='get' action="{% url 'searchbar' %}">
+      <form class="d-flex" method ='get' action="{% url 'search' %}" >
+        {% csrf_token %}
         <input class="form-control me-2" type="search" placeholder="Search" name="search' aria-label="Search">
        <!-- <button class="btn btn-outline-success" type="submit">Search</button>-->
           <button type="submit" class="btn btn-info">Search</button>
